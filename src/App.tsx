@@ -4,6 +4,7 @@ import Input from './Input';
 import Button from './Button';
 import { nanoid } from 'nanoid';
 import Items from './Items';
+import { ToastContainer, toast } from 'react-toastify';
 
 export type Item = {
 	id: string;
@@ -38,8 +39,6 @@ const App = () => {
 	const [items, setItems] = useState<Item[]>(getLocalStorage());
 	const [newItemName, setNewItemName] = useState<string>('');
 
-	console.log(items);
-
 	const handleSave = (data: unknown) => {
 		if (typeof data === 'object' && data !== null && 'item' in data && data.item !== '') {
 			const { item } = data as { item: string };
@@ -53,6 +52,7 @@ const App = () => {
 				return [...oldItems, newItem];
 			});
 			setNewItemName('');
+			toast.success('item added to the list');
 		}
 	};
 
@@ -60,11 +60,13 @@ const App = () => {
 		const newItems = items.filter((item) => item.id !== itemID);
 		setItems(newItems);
 		setLocalStorage(newItems);
+		toast.success('item deleted from the list');
 	};
 
 	return (
 		<section className="section-center">
-			<h4>Grocery Bud</h4>
+			<ToastContainer />
+			<h4 style={{ marginBottom: '20px' }}>Grocery Bud</h4>
 			<Form onSave={handleSave} className="form-control">
 				<Input
 					className="form-input"

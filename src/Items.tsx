@@ -1,4 +1,3 @@
-import React from 'react';
 import { Item } from './App.tsx';
 import SingleItem from './SingleItem.tsx';
 
